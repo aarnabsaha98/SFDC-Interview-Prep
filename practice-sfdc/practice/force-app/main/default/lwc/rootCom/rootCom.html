@@ -1,0 +1,17 @@
+<template>
+    <div
+        style=" font-weight:bolder;
+         background-color:rgb(129, 10, 240); width: 400px; height: 400px; 
+         display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+        <lightning-input label="Life Cycle Hook Name" value={value} onchange={handleName}></lightning-input>
+
+        <div style=" font-weight:bolder; background-color:rgb(186, 152, 218); width: 300px; height: 300px;">
+            <h1> Name Of Life Cycle Hook : {lifeCycleHookName}</h1>
+            <h2> Rule1 : {rule_1} </h2>
+            <h2> Rule2 :  {rule_2} </h2>
+            <h2> Rule3 :  {rule_3} </h2>
+            <h2> Rule4 :  {rule_4} </h2>
+        </div>
+    </div>
+</template>

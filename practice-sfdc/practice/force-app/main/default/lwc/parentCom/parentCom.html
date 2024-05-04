@@ -1,0 +1,8 @@
+<template>
+    <div>
+        <div class="heading"> <span> <strong> Heading :: Parent to child communication!!!</strong></span></div>
+        <lightning-button label="Greetins" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    </div>
+    <!-- Pass the greetings property to the child component -->
+    <c-child-com greetings={greetings}></c-child-com>
+</template>
