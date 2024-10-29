@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Accounts">
+        
+        <lightning-datatable
+            key-field="id"
+            data={paginatedRows}
+            columns={columns}
+            onrowaction={selectAllCheckboxes}
+            draft-values={draftValues}
+            onsave={handleSave}>
+        </lightning-datatable>
+
+        <div class="pagination">
+            <button class="prev-button" onclick={prevPage} disabled={isFirstPage}>Previous</button>
+            <span>Page {currentPage} of {totalPages}</span>
+            <button class="next-button" onclick={nextPage} disabled={isLastPage}>Next</button>
+        </div>
+    </lightning-card>
+</template>

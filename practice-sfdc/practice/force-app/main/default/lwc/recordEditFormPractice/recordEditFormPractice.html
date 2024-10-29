@@ -1,0 +1,44 @@
+<template>
+
+    <lightning-card title="Practice Record From VS Record Edit Form">
+        <!-- What is Record-Edit-form? How it is different from  Record-Edit?-->
+        <!-- 
+            1. It is more easier to implement and automatically gives us save and cancel buttons.
+            2. But does not support FORM_LAYOUT.
+            3. It provides more customizations.
+         -->
+         <div style="font-size: larger;color:aqua"> Hello , Record-From</div>
+         <lightning-record-form 
+            object-api-name={objectApiName} 
+            record-id={recordId} 
+            fields={fields}  mode="view">
+        </lightning-record-form>
+
+        <!-- record-id={recordId} -->
+        <div style="font-size: larger;"> Hello , Record-Edit-From</div>
+
+        <lightning-record-edit-form  
+            object-api-name={objectApiName} onsuccess={handleSuccess}
+            >
+
+            <lightning-messages>{accountId}, created successFully. </lightning-messages>
+
+            <lightning-input-field field-name="Name"> </lightning-input-field>
+            <lightning-input-field field-name="Website"> </lightning-input-field>
+            <lightning-input-field field-name="BillingCountry"> </lightning-input-field>
+
+            <lightning-button
+                class="slds-m-top_small"
+                type="submit"
+                label="Create new">
+            </lightning-button>
+
+            <lightning-button
+            class="slds-m-top_small"
+            label="Cancel"
+            onclick={handleReset}></lightning-button>
+
+        </lightning-record-edit-form>
+    </lightning-card>
+
+</template>

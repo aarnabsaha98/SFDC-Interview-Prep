@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Lightning CRUD Operation : FETCH & Update">
+        <lightning-datatable
+        key-field="id"
+        columns={colums}
+        data={accounts}>
+        onRowAction={handleUpdate}
+        </lightning-datatable>
+    </lightning-card>
+
+
+    <lightning-card title="Lightning CRUD Operation : INSERT ">
+        <lightning-input type="text" label="Name"></lightning-input>
+        <lightning-input type="text" label="Website"></lightning-input>
+        <lightning-input type="text" label="Rating"></lightning-input>
+    </lightning-card>
+
+
+
+
+
+
+</template>

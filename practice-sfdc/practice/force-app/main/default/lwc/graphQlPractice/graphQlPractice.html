@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="GraphQl">
+        <template for:each={results} for:item="result">
+            <div key={result}>
+                Account Name : {result.Name.value}
+            </div>
+        </template>
+    </lightning-card>
+    
+</template>

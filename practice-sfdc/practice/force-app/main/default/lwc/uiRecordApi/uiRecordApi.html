@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Create Record With Wire Service">
+        <lightning-input label="Name" onchange={handleChangeName} value={accName} class="slds-m-bottom_x-small">
+        </lightning-input>
+        <lightning-input label="Email" onchange={handleChangeEmail} value={accEmail} class="slds-m-bottom_x-small">
+        </lightning-input>
+        <lightning-input label="Website" onchange={handleChangeWebsite} value={accWebsite} class="slds-m-bottom_x-small">
+        </lightning-input>
+        <lightning-button label="Create" variant="brand" onclick={createAccount}>
+        </lightning-button>
+    </lightning-card>
+</template>

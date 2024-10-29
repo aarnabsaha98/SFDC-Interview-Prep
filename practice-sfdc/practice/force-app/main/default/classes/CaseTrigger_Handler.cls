@@ -10,6 +10,7 @@ public with sharing class CaseTrigger_Handler extends TriggerHandler{
     }
     public override void afterDelete(){
         Utility_CaseHanlder.linkCaseWithContact(Trigger.old, null);
+        Utility_CaseHanlder.sendEmailToAccountOwner(Trigger.old);
     }
 
 }

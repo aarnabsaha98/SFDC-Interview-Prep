@@ -1,0 +1,17 @@
+<template>
+    <lightning-card variant="Narrow" title="Publishing Component">
+        <lightning-input 
+            type="text" 
+            variant="standard" 
+            name="name" 
+            label="Enter Message to pass" 
+            value={dataToSend}
+            onchange={handleChange}></lightning-input>
+        <lightning-button 
+            variant="base" 
+            label="Publish Data"
+            title="Publish Data"
+            onclick={handlePublish}>
+        </lightning-button>
+    </lightning-card>
+</template>

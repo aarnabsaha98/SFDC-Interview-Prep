@@ -5,13 +5,13 @@ public virtual class TaskManager_DP extends TaskManager_Abstract{
     public String description;
 
     public TaskManager_DP() {
-        System.debug('logLevel :  TaskManager_DP Constructor');
+        // System.debug('logLevel :  TaskManager_DP Constructor');
     }
 
     public TaskManager_DP(String name, String description) {
         this.name = name;
         this.description = description;
-        System.debug('logLevel :  T name :' + this.name + ' description :' + this.description);
+        // System.debug('logLevel :  T name :' + this.name + ' description :' + this.description);
 
     }
 

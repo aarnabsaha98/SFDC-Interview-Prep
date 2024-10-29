@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Lightning Record UI WITH Wire " icon-name="standard:account">
+      <div class="slds-var-m-around_medium">
+        <template lwc:if={filteredData}>
+          <template for:each={filteredData} for:item="record">
+            <p key={record.Id}>{record.Name}</p>
+            <p key={record.Id}>{record.Website}</p>
+          </template>
+        </template>
+      </div>
+    </lightning-card>
+  </template>

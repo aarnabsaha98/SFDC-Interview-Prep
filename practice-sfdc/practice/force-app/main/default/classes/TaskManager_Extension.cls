@@ -1,5 +1,5 @@
 public with sharing class TaskManager_Extension extends TaskManager_DP{
-    public String scheduledTime;
+    public String scheduledTime ;
     public String assignedUser;
     private Integer reminderIncremental = 0;
  
@@ -9,7 +9,9 @@ public with sharing class TaskManager_Extension extends TaskManager_DP{
         this.scheduledTime = scheduledTime;
         this.assignedUser = assignedUser;
         this.reminderIncremental = reminderIncremental;
-        System.debug('logLevel :  This task :' + this.name + 'is assigned to '+ this.assignedUser + ' at :' + scheduledTime);
+        // System.debug('logLevel :  This task :' + this.name + 'is assigned to '+ this.assignedUser + ' at :' + scheduledTime);
     }
+
+
 
 }

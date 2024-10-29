@@ -81,4 +81,51 @@ public with sharing class Utility_CaseHanlder {
         }
         update updatetask;
     }
+
+
+    //Q1. write a trigger that creates a Task and send an email to the Account's owner whenEver case is deleted from account.
+
+    public static void sendEmailToAccountOwner(List<Case> caselist){
+        Set<Id> caseAccountIdSets = new Set<Id>();
+        List<Task> taskList = new List<Task>();
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        Map<Id, String> accOwnerEmailMap = new Map<Id, String>();
+
+		for(Case cs :caselist){
+			caseAccountIdSets.add(cs.AccountId);
+			Task tsk = new Task(WhatId = cs.AccountId, WhoId = cs.ContactId); 
+			taskList.add(tsk);
+		}
+	    
+        
+        List<Account> accList =  [SELECT ID, NAME, Owner.Email FROM Account WHERE ID IN : caseAccountIdSets];
+
+        for(Account acc :accList){
+            accOwnerEmailMap.put(acc.Id, acc.Owner.Email);
+        }
+
+	    if(!taskList.isEmpty()){
+		    insert taskList;
+	    }
+
+	    for(Task tsk : taskList){
+            if(accOwnerEmailMap.get(tsk.WhatId) != null){
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                String[] toAddresses = new String[] {accOwnerEmailMap.get(tsk.WhatId)};
+                mail.setToAddresses(toAddresses);
+                mail.setSubject('Send Email --> subject');
+                mail.setPlainTextBody('Hi, Arnab');
+                mails.add(mail);
+            }
+		    
+	    }
+	
+
+	    if(!mails.isEmpty()){
+            Messaging.SendEmail(mails);
+        }
+        
+        
+    }
+    
 }

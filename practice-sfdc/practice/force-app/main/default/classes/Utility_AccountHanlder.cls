@@ -3,8 +3,8 @@ public with sharing class Utility_AccountHanlder {
     private static final String HANDLER_NAME = 'AccountTrigger_Handler';
 
     @AuraEnabled(cacheable=true)
-    public static List<Account> getAllAccounts(){
-        return [SELECT ID,NAME FROM Account];
+    public static List<Account> getAllAccounts(String phone){
+        return [SELECT Name,Website, Phone  From Account WHERE Phone != :phone];   
     }
 
     public static void updateName(List<Account> accList) {
@@ -92,4 +92,46 @@ public with sharing class Utility_AccountHanlder {
         insert conlist;
 
     }
+
+    /*
+    When an Account gets updated, send email to the account's 
+    owner with the details fo the conract modified b/w the last update and current update of account 
+    */
+    public static void sendEmailWithUpdatedContacts(List<Account> newAccList, Map<Id, Account> oldAccMap){
+
+        List<Id> accSet = new List<Id>();
+        Map<Id, Datetime> oldLastModifiedMap = new Map<Id, Datetime>();
+        Map<Id, Datetime> newLastModifiedMap = new Map<Id, Datetime>();
+    
+        for(Account acc : newAccList){
+            Account oldAccount = oldAccMap.get(acc.Id);
+            if(oldAccount != null){
+                oldLastModifiedMap.put(acc.Id, oldAccount.LastModifiedDate);
+                newLastModifiedMap.put(acc.Id, acc.LastModifiedDate);
+                accSet.add(acc.Id);
+            }
+        }
+    
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        List<Contact> conList = [SELECT Id, Name, AccountId, LastModifiedDate, Email FROM Contact WHERE AccountId IN :accSet];
+    
+        for(Contact con : conList){
+            Datetime oldLastModifiedDate = oldLastModifiedMap.get(con.AccountId);
+            Datetime newLastModifiedDate = newLastModifiedMap.get(con.AccountId);
+            
+            if(con.LastModifiedDate > oldLastModifiedDate && con.LastModifiedDate <= newLastModifiedDate){
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                String[] toAddresses = new String[] {'aarnabsaha98@gmail.com'};
+                mail.setToAddresses(toAddresses);
+                mail.setSubject('Send Email --> subject');
+                mail.setPlainTextBody('Hi, Arnab. Updated Contact: ' + con.Name);
+                mails.add(mail);
+            }
+        }
+    
+        if(!mails.isEmpty()){
+            Messaging.sendEmail(mails);
+        }
+    }
+    
 }
