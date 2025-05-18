@@ -127,5 +127,48 @@ public with sharing class Utility_CaseHanlder {
         
         
     }
+
+    /* Whenever a child case record is closed, we need to check it's parent case and 
+    if all child of that parent case are closed, we need to close the parent case as well.
+    */
+
+    public static void checkCaseStatusOnParent(List<Case> caselist) {
+        Set<Id> parentIds = new Set<Id>();
+    
+        // Collect parent case IDs
+        for (Case c : caselist) {
+            if (c.Status == 'Closed' && c.ParentId != null) {
+                parentIds.add(c.ParentId);
+            }
+        }
+    
+        if (parentIds.isEmpty()) return;
+    
+        // Query parent cases
+        Map<Id, Case> parentCaseMap = new Map<Id, Case>(
+            [SELECT Id, Status FROM Case WHERE Id IN :parentIds]
+        );
+
+        // get all the childCase and check all the child case status is closed or not
+        List<Case> childCases = [SELECT Id, ParentId, Status FROM Case WHERE ParentId IN :parentIds];
+        Boolean isAllClosed = true;
+        for(Case cc : childCases){
+            if(cc.Status != 'Closed'){
+                isAllClosed = false;
+            }
+        }
+        
+        // Update parent case status
+        if(isAllClosed){
+            for (Id parentCaseId : parentCaseMap.keySet()) {
+                Case parentCase = parentCaseMap.get(parentCaseId);
+                parentCase.Status = 'Closed';
+            }
+        }
+
+        update parentCaseMap.values();
+       
+    }
+    
     
 }
